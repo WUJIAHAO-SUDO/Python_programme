@@ -1,0 +1,29 @@
+Scanpy 是一个用于单细胞RNA测序数据分析的Python库。下面是使用Scanpy对单细胞RNA-seq数据进行处理、降维和聚类的代码示例。
+
+bash
+复制代码
+# 安装 Scanpy
+pip install scanpy
+python
+复制代码
+import scanpy as sc
+
+# 读取数据
+adata = sc.read_10x_mtx('/path/to/10X/matrix', var_names='gene_symbols', cache=True)
+
+# 预处理数据
+sc.pp.filter_cells(adata, min_genes=200)
+sc.pp.filter_genes(adata, min_cells=3)
+sc.pp.normalize_total(adata, target_sum=1e4)
+sc.pp.log1p(adata)
+
+# 进行降维分析
+sc.tl.pca(adata, svd_solver='arpack')
+
+# 聚类分析
+sc.pp.neighbors(adata, n_neighbors=10, n_pcs=40)
+sc.tl.leiden(adata)
+
+# UMAP/t-SNE可视化
+sc.tl.umap(adata)
+sc.pl.umap(adata, color=['leiden', 'gene_of_interest'])

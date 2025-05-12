@@ -1,0 +1,18 @@
+# 安装 STAR 工具
+wget https://github.com/alexdobin/STAR/archive/refs/tags/2.7.9a.tar.gz
+tar -xzf 2.7.9a.tar.gz
+cd STAR-2.7.9a/source
+make STAR
+python
+复制代码
+import os
+
+# 设置路径
+star_path = "/path/to/STAR"  # 替换为STAR工具的实际路径
+genome_dir = "/path/to/genomeDir"  # 替换为参考基因组目录的路径
+fastq_files = "/path/to/reads_1.fastq /path/to/reads_2.fastq"  # 替换为实际的FASTQ文件路径
+output_prefix = "/path/to/output/sample_"  # 输出文件前缀
+
+# 运行 STAR 进行基因组比对
+command = f"{star_path} --runThreadN 8 --genomeDir {genome_dir} --readFilesIn {fastq_files} --outFileNamePrefix {output_prefix} --outSAMtype BAM SortedByCoordinate"
+os.system(command)

@@ -1,0 +1,17 @@
+使用Python生成可视化报告或基于HTML/CSS/JavaScript的Web页面，展示分析结果。
+
+python
+复制代码
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 示例：绘制差异表达基因的火山图
+volcano_data = pd.DataFrame({
+    'logFC': adata.uns['rank_genes_groups']['logfoldchanges']['Tumor'],
+    'pval': adata.uns['rank_genes_groups']['pvals']['Tumor']
+})
+volcano_data['-log10pval'] = -np.log10(volcano_data['pval'])
+
+sns.scatterplot(data=volcano_data, x='logFC', y='-log10pval', hue='pval < 0.05')
+plt.title('Volcano plot of Differentially Expressed Genes')
+plt.show()

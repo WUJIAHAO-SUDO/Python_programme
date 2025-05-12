@@ -1,0 +1,20 @@
+clusterProfiler 是一个用于基因集富集分析的R包。我们同样可以通过 reticulate 库在Python中调用。
+
+bash
+复制代码
+# 安装 clusterProfiler 在 R 环境中
+install.packages('clusterProfiler')
+python
+复制代码
+import reticulate
+r = reticulate.r
+
+# 加载 R 中的 clusterProfiler 库
+r('library(clusterProfiler)')
+r('library(org.Hs.eg.db)')  # 如果你在研究人类基因组
+
+# 使用差异表达基因进行功能富集分析
+r('enrich_res <- enrichGO(gene = diff_genes, OrgDb = org.Hs.eg.db, keyType = "SYMBOL", ont = "BP")')
+
+# 可视化富集结果
+r('dotplot(enrich_res)')
